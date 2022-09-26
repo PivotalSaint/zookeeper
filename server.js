@@ -68,6 +68,10 @@ app.get('/api/animals/:id', (req, res) => {
     }
 });
 
+//added post routes
+app.post('/api/animals', (req, res) => {});
+
+//added a listen on the port
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
 });
