@@ -4,6 +4,7 @@ const express = require('express');
 const { animals } = require('./data/animals.json');
 const { json } = require('express');
 const { type } = require('os');
+const exp = require('constants');
 
 
 //to instantiate server
@@ -16,6 +17,8 @@ app.use(express.urlencoded({ extended: true }));
 //parse incoming JSON data
 app.use(express.json());
 
+//add for express static
+app.use(express.static('public'));
 
 function filterByQuery(query, animalsArray) {
   let personalityTraitsArray = [];
@@ -137,6 +140,26 @@ app.post('/api/animals', (req, res) => {
     res.json(aniaml);
   }
 
+});
+
+//mod 11.3.4 routes to serve index html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+//added 11.3.6 get to our animals.html
+app.get('/animals', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+
+//added 11.3.6 get to our zookeeper.js file
+app.get('/zookeepers', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+});
+
+//for request that doesn't exist
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
 //added a listen on the port
